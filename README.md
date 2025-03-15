@@ -1,59 +1,39 @@
-# Project Title
+# Machine Learning Task
 
-Simple overview of use/purpose.
+## 1. MLOps Design Phase
 
-## Description
+1. Defining the business problem to be solved
 
-An in-depth paragraph about your project and overview of use.
+   - Universal Pictures, a leading film production company, faces challenges in accurately predicting movie revenue despite rising production costs. Traditional methods based on budget and star power often overlook key factors like genre trends and audience engagement, leading to inaccurate forecasts and poor investment decisions. To address this, Universal Pictures has commissioned me to develop a machine-learning model that predicts movie revenue using pre-production data. This model will help executives forecast earnings, optimize budgets, and assess project risks more effectively.
 
-## Getting Started
+2. Refactoring the business problem into a machine learning problem
 
-### Dependencies
+   - To build a supervised linear regression model that predicts a movie’s revenue using features like budget, genre, cast, and audience metrics. The model will learn patterns from historical movie data (1980–2020) to provide accurate revenue forecasts for future films.
 
-* Describe any prerequisites, libraries, OS version, etc., needed before installing program.
-* ex. Windows 10
+3. Defining success metrics
 
-### Installing
+   - Model generalises well to training, testing and new data.
+   - Should be easily updatable with new movie data to adapt to changing industry trends.
 
-* How/where to download your program
-* Any modifications needed to be made to files/folders
+4. Researching available data.
 
-### Executing program
+   - I have sourced a raw data set from [Kaggle](https://www.kaggle.com/). The data is saved in the CSV file [movies.csv](/2.Model_Development/2.1.Data_Wrangling/movies.csv).
 
-* How to run the program
-* Step-by-step bullets
-```
-code blocks for commands
-```
+   - The data columns are:
 
-## Help
-
-Any advise for common problems or issues.
-```
-command to run if program contains helper info
-```
-
-## Authors
-
-Contributors names and contact info
-
-ex. Mr Jones
-ex. [@benpaddlejones](https://github.com/benpaddlejones)
-
-## Version History
-
-* 0.2
-    * Various bug fixes and optimizations
-    * See [commit change]() or See [release history]() or see [branch]()
-* 0.1
-    * Initial Release
-
-## License
-
-This project is licensed under the [NAME HERE] License - see the LICENSE.md file for details
-
-## Acknowledgments
-
-Inspiration, code snippets, etc.
-* [Github md syntax](https://docs.github.com/en/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax)
-* [TempeHS Jupyter-Notebook template](https://github.com/TempeHS/TempeHS_Jupyter-Notebook_DevContainer)
+     | Column   | Data                                                                           |
+     | -------- | ------------------------------------------------------------------------------ |
+     | name     | The title of the movie.                                                        |
+     | rating   | The movie's age rating (e.g., PG, R).                                          |
+     | genre    | The primary genre of the movie (e.g., action, drama).                          |
+     | released | The release date of the movie in the United States (in YYYY-MM-DD format).     |
+     | score    | The IMDb user rating (typically on a scale from 0 to 10).                      |
+     | votes    | The number of user votes the movie received on IMDb.                           |
+     | director | The director of the movie.                                                     |
+     | star     | The main actor/actress of the movie                                            |
+     | writer   | The primary scriptwriter(s) for the movie.                                     |
+     | country  | The country where the movie was produced.                                      |
+     | budget   | The production cost of the movie (in USD).                                     |
+     | gross    | The total revenue earned by the movie (in USD). (Target variable for my model) |
+     | company  | The production company responsible for making the movie.                       |
+     | runtime  | The duration of the movie (in minutes).                                        |
