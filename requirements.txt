@@ -9,3 +9,8 @@ graphviz
 pydot-ng
 pillow
 pydotplus
+ipympl
+ipywidgets
+torch
+torchvision
+tqdm
