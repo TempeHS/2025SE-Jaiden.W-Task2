@@ -37,3 +37,12 @@
      | gross    | The total revenue earned by the movie (in USD). (Target variable for my model) |
      | company  | The production company responsible for making the movie.                       |
      | runtime  | The duration of the movie (in minutes).                                        |
+
+## User Input
+- actor
+- director
+- budget
+- production company
+- genre
+- when released
+- rating
