@@ -45,3 +45,4 @@
 - production company
 - genre
 - when released
+- rating
