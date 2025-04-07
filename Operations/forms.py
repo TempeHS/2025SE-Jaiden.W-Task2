@@ -1,9 +1,16 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, SelectField, IntegerField, FloatField, BooleanField, SubmitField
-from wtforms.validators import DataRequired, Regexp
+from wtforms.validators import DataRequired, Regexp, NumberRange
 
 class MovieForm(FlaskForm):
-    budget = FloatField("Budget (in millions)", validators=[DataRequired()])
+    budget = FloatField(
+        "Budget (in millions)",
+        validators=[
+            DataRequired(),
+            NumberRange(min=0, message="Budget must be a positive number"),
+        ],
+        render_kw={"type": "number", "step": "any"},  # Allow decimal values
+    )
     release_date = StringField(
         "Release Date (YYYY-MM-DD)",
         validators=[
@@ -33,7 +40,6 @@ class MovieForm(FlaskForm):
         validators=[DataRequired()],
     )
     is_sequel = BooleanField("Is it a Sequel?")
-    country = StringField("Country", validators=[DataRequired()])
     runtime = IntegerField("Runtime (in minutes)", validators=[DataRequired()])
     genre = SelectField(
         "Genre",
@@ -60,3 +66,8 @@ class MovieForm(FlaskForm):
         validators=[DataRequired()],
     )
     submit = SubmitField("Submit")
+
+    @property
+    def is_sequel_data(self):
+        """Return 1 if True, otherwise 0."""
+        return 1 if self.is_sequel.data else 0

@@ -16,8 +16,8 @@ limiter = Limiter(
     storage_uri="memory://",
 )
 
-MLmodel = MLModel()
-MLmodel.load_model("path/to/your/model.pkl")
+MLmodel = MLModel(model=None)
+MLmodel.load_model("../Model_Testing_and_Validation/my_saved_model_v1.sav")
 
 # Initialize logging
 app_log = logging.getLogger(__name__)
@@ -44,7 +44,9 @@ def prediction():
         if not data:
             return jsonify({"message": "No input data provided"}), 400
         prediction = MLmodel.predict(data)
-        return jsonify({"prediction": prediction})
+        prediction_list = prediction.tolist()      # Convert NumPy array to list for JSON serialization
+        app_log.info(f"Prediction result: {prediction_list}")
+        return jsonify({"prediction": prediction_list})
     except Exception as e:
         app_log.error(f"Error in prediction: {e}")
         return jsonify({"message": "Error processing the request"}), 500
@@ -55,3 +57,6 @@ def setData():
     auth_response = check_api_key()
     if auth_response:
         return auth_response
+
+if __name__ == "__main__":
+    api.run(debug=True, host="0.0.0.0", port=3000)

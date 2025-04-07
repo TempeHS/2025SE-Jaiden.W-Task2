@@ -14,7 +14,7 @@ csrf = CSRFProtect(app)
 limiter = Limiter(get_remote_address, app=app)
 cors = CORS(app) 
 app.config["CORS_HEADERS"] = "Content-Type"
-headers = {"Authorization": "uPTPeF9BDNiqAkNj"}  # Add your API key
+headers = {"Authorisation": "uPTPeF9BDNiqAkNj"}  # Add your API key
 
 
 # Initialize logging
@@ -32,7 +32,6 @@ app.config.update(
     SESSION_COOKIE_HTTPONLY=True,  # Prevent JavaScript access to cookies
     SESSION_COOKIE_SAMESITE='Lax',  # Control how cookies are sent with cross-site requests
 )
-
 
 # Redirect index.html to domain root for consistent UX
 @app.route("/index", methods=["GET"])
@@ -64,33 +63,40 @@ def root():
         "manifest-src": "'self'",
     }
 )
-
 def predict():
     form = MovieForm()
-    if form.validate_on_submit():
-        # Extract form data
-        data = {
-            "budget": form.budget.data,
-            "release_date": form.release_date.data,
-            "rating": form.rating.data,
-            "is_sequel": form.is_sequel.data,
-            "country": form.country.data,
-            "runtime": form.runtime.data,
-            "genre": form.genre.data,
-        }
-        # Send data to the API
+    if request.method == "POST":
         try:
-            response = requests.post("http://127.0.0.1:5001/api/prediction", json=data, headers=headers)
-            response_data = response.json()
-            if response.status_code == 200:
-                flash(f"Prediction: {response_data['prediction']}", "success")
+            if form.validate_on_submit():
+                # Extract form data
+                data = {
+                    "budget": form.budget.data,
+                    "release_date": form.release_date.data,
+                    "rating": form.rating.data,
+                    "is_sequel": form.is_sequel_data,
+                    "runtime": form.runtime.data,
+                    "genre": form.genre.data,
+                }
+                # Send data to the API
+                response = requests.post("http://127.0.0.1:3000/api/prediction", json=data, headers=headers)
+                if response.status_code == 200:
+                    flash(f"Prediction: {response.json()['prediction']}", "success")
+                else:
+                    app_log.error(f"API Error: {response.json().get('message', 'Unknown error')}")
+                    flash(f"API Error: {response.json().get('message', 'Unknown error')}","danger",)
             else:
-                flash(f"API Error: {response_data.get('message', 'Unknown error')}", "danger")
+                # Log form validation errors
+                app_log.error(f"Form validation errors: {form.errors}")
+                flash("Please correct the errors in the form and try again.", "danger")
         except requests.exceptions.RequestException as e:
-            flash(f"Error connecting to API: {str(e)}", "danger")
-
+            app_log.error(f"Error connecting to API: {str(e)}")
+            flash("An error occurred while connecting to the API. Please try again later.","danger",)
+        except Exception as e:
+            app_log.error(f"Unexpected error: {str(e)}")
+            flash("An unexpected error occurred. Please try again later.", "danger")
         return redirect("/")
-    return render_template("index.html", form=form)
+    elif request.method == "GET":
+        return render_template("index.html", form=form)
 
 
 
