@@ -17,7 +17,7 @@ user_input = {
 }
 
 # Preprocess the input data
-prediction = MLmodel.predict(user_input)
+prediction = MLmodel.preprocess_input(user_input)
 
 # Print the preprocessed data to verify
 print(prediction)

@@ -1,6 +1,6 @@
 {% extends "layout.html" %} {% block content %}
 <div class="container mt-4">
-  <h1 class="text-center mb-4">Movie Prediction Form</h1>
+  <h1 class="text-center mb-4">Movie Gross Predictor</h1>
   <form method="POST" action="{{ url_for('predict') }}">
     {{ form.hidden_tag() }}
     <div class="row">
@@ -91,10 +91,23 @@
       {% endif %}
     </div>
 
+    <div class="form-check">
+      <input
+        class="form-check-input"
+        type="checkbox"
+        id="save_to_csv"
+        name="save_to_csv"
+      />
+      <label class="form-check-label" for="save_to_csv">
+        Allow this to be saved for future predictions
+      </label>
+    </div>
+
     <button type="submit" class="btn btn-primary btn-block mt-3">
       {{ form.submit.label }}
     </button>
   </form>
+
   <!-- Flash Messages -->
   {% with messages = get_flashed_messages(with_categories=true) %} {% if
   messages %}

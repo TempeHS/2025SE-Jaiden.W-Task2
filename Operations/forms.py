@@ -2,9 +2,9 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, SelectField, IntegerField, FloatField, BooleanField, SubmitField
 from wtforms.validators import DataRequired, Regexp, NumberRange
 
-class MovieForm(FlaskForm):
+class MoviePredictionForm(FlaskForm):
     budget = FloatField(
-        "Budget (in millions)",
+        "Budget (in USD)",
         validators=[
             DataRequired(),
             NumberRange(min=0, message="Budget must be a positive number"),
@@ -24,18 +24,18 @@ class MovieForm(FlaskForm):
     rating = SelectField(
         "Rating",
         choices=[
-            ("R", "R"),
-            ("PG", "PG"),
             ("G", "G"),
-            ("Not Rated", "Not Rated"),
-            ("NC-17", "NC-17"),
-            ("Approved", "Approved"),
             ("TV-PG", "TV-PG"),
-            ("PG-13", "PG-13"),
+            ("PG", "PG"),
+            ("Approved", "Approved"),
             ("Unrated", "Unrated"),
-            ("X", "X"),
-            ("TV-MA", "TV-MA"),
+            ("Not Rated", "Not Rated"),
+            ("PG-13", "PG-13"),
             ("TV-14", "TV-14"),
+            ("R", "R"),
+            ("TV-MA", "TV-MA"),
+            ("NC-17", "NC-17"),
+            ("X", "X"),
         ],
         validators=[DataRequired()],
     )
@@ -54,7 +54,7 @@ class MovieForm(FlaskForm):
             ("Family", "Family"),
             ("Fantasy", "Fantasy"),
             ("Horror", "Horror"),
-            ("Music", "Music"),
+            ("Musical", "Musical"),
             ("Musical", "Musical"),
             ("Mystery", "Mystery"),
             ("Romance", "Romance"),
@@ -71,3 +71,4 @@ class MovieForm(FlaskForm):
     def is_sequel_data(self):
         """Return 1 if True, otherwise 0."""
         return 1 if self.is_sequel.data else 0
+    

@@ -44,9 +44,9 @@ def prediction():
         if not data:
             return jsonify({"message": "No input data provided"}), 400
         prediction = MLmodel.predict(data)
-        prediction_list = prediction.tolist()      # Convert NumPy array to list for JSON serialization
-        app_log.info(f"Prediction result: {prediction_list}")
-        return jsonify({"prediction": prediction_list})
+        # Use the formatted prediction directly
+        app_log.info(f"Prediction result: {prediction['formatted']}")
+        return jsonify({"prediction": prediction["formatted"]})
     except Exception as e:
         app_log.error(f"Error in prediction: {e}")
         return jsonify({"message": "Error processing the request"}), 500
