@@ -97,6 +97,7 @@ def predict():
                 # Log form validation errors
                 app_log.error(f"Form validation errors: {form.errors}")
                 flash("Please correct the errors in the form and try again.", "danger")
+                return render_template("index.html", form=form, errors=form.errors)
         except requests.exceptions.RequestException as e:
             app_log.error(f"Error connecting to API: {str(e)}")
             flash("An error occurred while connecting to the API. Please try again later.","danger",)
