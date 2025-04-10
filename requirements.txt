@@ -14,3 +14,8 @@ ipywidgets
 torch
 torchvision
 tqdm
+Flask
+flask_wtf
+flask-csp
+flask-limiter
+flask-cors

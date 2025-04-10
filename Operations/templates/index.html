@@ -1,0 +1,132 @@
+{% extends "layout.html" %} {% block content %}
+<div class="container mt-4">
+  <h1 class="text-center mb-4">Movie Gross Predictor</h1>
+  <form method="POST" action="{{ url_for('predict') }}">
+    {{ form.hidden_tag() }}
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="{{ form.budget.id }}">{{ form.budget.label }}</label>
+          {{ form.budget(class="form-control") }} {% if form.budget.errors %}
+          <div class="text-danger">
+            {% for error in form.budget.errors %}
+            <small>{{ error }}</small>
+            {% endfor %}
+          </div>
+          {% endif %}
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="{{ form.release_date.id }}"
+            >{{ form.release_date.label }}</label
+          >
+          {{ form.release_date(class="form-control") }} {% if
+          form.release_date.errors %}
+          <div class="text-danger">
+            {% for error in form.release_date.errors %}
+            <small>{{ error }}</small>
+            {% endfor %}
+          </div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="{{ form.rating.id }}">{{ form.rating.label }}</label>
+          {{ form.rating(class="form-control") }} {% if form.rating.errors %}
+          <div class="text-danger">
+            {% for error in form.rating.errors %}
+            <small>{{ error }}</small>
+            {% endfor %}
+          </div>
+          {% endif %}
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="form-group form-check">
+          <label for="{{ form.is_sequel.id }}" class="form-check-label"
+            >{{ form.is_sequel.label }}</label
+          >
+          {{ form.is_sequel(class="form-check-input") }} {% if
+          form.is_sequel.errors %}
+          <div class="text-danger">
+            {% for error in form.is_sequel.errors %}
+            <small>{{ error }}</small>
+            {% endfor %}
+          </div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="{{ form.runtime.id }}">{{ form.runtime.label }}</label>
+          {{ form.runtime(class="form-control") }} {% if form.runtime.errors %}
+          <div class="text-danger">
+            {% for error in form.runtime.errors %}
+            <small>{{ error }}</small>
+            {% endfor %}
+          </div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="{{ form.genre.id }}">{{ form.genre.label }}</label>
+      {{ form.genre(class="form-control") }} {% if form.genre.errors %}
+      <div class="text-danger">
+        {% for error in form.genre.errors %}
+        <small>{{ error }}</small>
+        {% endfor %}
+      </div>
+      {% endif %}
+    </div>
+
+    <div class="form-check">
+      <input
+        class="form-check-input"
+        type="checkbox"
+        id="save_to_csv"
+        name="save_to_csv"
+      />
+      <label class="form-check-label" for="save_to_csv">
+        Allow this to be saved for future predictions
+      </label>
+    </div>
+
+    <button type="submit" class="btn btn-primary btn-block mt-3">
+      {{ form.submit.label }}
+    </button>
+  </form>
+
+  <!-- Flash Messages -->
+  {% with messages = get_flashed_messages(with_categories=true) %} {% if
+  messages %}
+  <div class="flash-messages">
+    {% for category, message in messages %}
+    <div
+      class="alert alert-{{ category }} alert-dismissible fade show"
+      role="alert"
+    >
+      {{ message }}
+      <button
+        type="button"
+        class="btn-close"
+        data-bs-dismiss="alert"
+        aria-label="Close"
+      ></button>
+    </div>
+    {% endfor %}
+  </div>
+  {% endif %} {% endwith %}
+</div>
+{% endblock %}
